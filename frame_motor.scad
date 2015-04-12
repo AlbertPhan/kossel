@@ -4,6 +4,7 @@ use <vertex.scad>;
 use <nema17.scad>;
 
 $fn = 24;
+motorCableCutout=false;
 
 module frame_motor() {
   difference() {
@@ -14,8 +15,10 @@ module frame_motor() {
       scale([0.11, 0.11, 1]) import("logotype.stl");
     // Motor cable paths.
     for (mirror = [-1, 1]) scale([mirror, 1, 1]) {
-      translate([-35, 45, 0]) rotate([0, 0, -30])
-        # cube([4, 15, 15], center=true);
+	   if (motorCableCutout) {
+         translate([-35, 45, 0]) rotate([0, 0, -30])
+           # cube([4, 15, 15], center=true);
+	   }
       translate([-6, 0, 0]) cylinder(r=2.5, h=40);
       translate([-11, 0, 0]) # cube([15, 4, 15], center=true);
     }

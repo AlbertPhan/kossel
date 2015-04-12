@@ -28,8 +28,13 @@ module screw_socket_cone() {
 module vertex(height, idler_offset, idler_space) {
   union() {
     // Pads to improve print bed adhesion for slim ends.
-    translate([-37.5, 52.2, -height/2]) cylinder(r=8, h=0.5);
-    translate([37.5, 52.2, -height/2]) cylinder(r=8, h=0.5);
+    translate([-39.0, 54.0, -height/2]) cylinder(r=8, h=0.5);
+    translate([39.0, 54.0, -height/2]) cylinder(r=8, h=0.5);
+    translate([-25.5, -2, -height/2]) cylinder(r=8, h=0.5);
+    translate([25.5, -2, -height/2]) cylinder(r=8, h=0.5);
+	// Round the back edges to reduce the risk of delamination
+	translate([-41.55,59,-height/2]) cylinder(r=2,h=height);
+	translate([41.55,59,-height/2]) cylinder(r=2,h=height);
     difference() {
       union() {
         intersection() {
