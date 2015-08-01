@@ -24,5 +24,5 @@ extrusionV = 20;
 extrusionH = 15;
 
 // Placement for the NEMA17 stepper motors.
-motor_offset = 44 - 7.5 + extrusionV/2;
+motor_offset = 48;
 motor_length = 47;

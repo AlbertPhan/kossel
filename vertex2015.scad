@@ -1,4 +1,4 @@
-include <configuration.scad>;
+include <configuration_2015.scad>;
 
 $fn = 24;
 roundness = 6;
@@ -38,15 +38,17 @@ module vertex(height, idler_offset, idler_space) {
 
    difference() {
       union() {
+		  // front part
         intersection() {
-          translate([0, 22, 0])
-            cylinder(r=36, h=height, center=true, $fn=60);
-          translate([0, -37, 0]) rotate([0, 0, 30])
+          translate([0, 13, 0])
+            cylinder(r=32, h=height, center=true, $fn=60);
+          translate([0, -34, 0]) rotate([0, 0, 30])
             cylinder(r=50, h=height+1, center=true, $fn=6);
         }
+		 // side parts
         translate([0, 38, 0]) intersection() {
           rotate([0, 0, -90])
-            cylinder(r=55, h=height, center=true, $fn=3);
+            cylinder(r=60, h=height, center=true, $fn=3);
           translate([0, 10, 0])
             cube([100, 100, 2*height], center=true);
           translate([0, -10, 0]) rotate([0, 0, 30])
@@ -69,10 +71,11 @@ module vertex(height, idler_offset, idler_space) {
         translate([0, 26+idler_offset+30, 0]) rotate([90, 0, 0])
           cylinder(r1=30, r2=2, h=30-idler_space/2);
       }
-      translate([0, 58, 0]) minkowski() {
+		 // remove the back
+      translate([0, 60, 0]) minkowski() {
         intersection() {
           rotate([0, 0, -90])
-            cylinder(r=55, h=height, center=true, $fn=3);
+            cylinder(r=62, h=height, center=true, $fn=3);
           translate([0, 7, 0])
             cube([100, 30, 2*height], center=true);
         }
@@ -91,7 +94,7 @@ module vertex(height, idler_offset, idler_space) {
             }
             // Nut tunnels.
 	    for (z = [-1, 1]) {
-	      scale([1, 1, z]) translate([0, -100, 3]) minkowski() {
+	      scale([1, 1, z]) translate([0, -98, 3]) minkowski() {
 	        rotate([0, 0, -a*30]) cylinder(r=4, h=16, $fn=6);
 		cube([0.1, 5, 0.1], center=true);
 	      }

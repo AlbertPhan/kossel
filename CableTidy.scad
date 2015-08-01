@@ -1,37 +1,37 @@
 include <configuration.scad>;
 
-use <microswitch.scad>;
-
 thickness = 5.5;
-width = 18;
+width = 16;
 height = 15;
 slotWidth = 5.0;
 slotDepth = 1.4;
+overlap=0.01;
+
+module tube(innerDiameter, outerDiameter, length) {
+	difference() {
+		cylinder(r=outerDiameter/2, h=length, $fn=32);
+		translate([0,0,-overlap])
+			cylinder(r=innerDiameter/2, h=length+2*overlap, $fn=32);
+		translate([0,1,-overlap])
+			cube([outerDiameter/2,outerDiameter/2,length+2*overlap]);
+	}
+}
 
 module endstop() {
   difference() {
     union() {
       cube([width, thickness, height], center=true);
-//      translate([0, 0, -height/4])
-//        cube([width+2, thickness, height/2], center=true);
       translate([0, slotDepth, 0])
         cube([slotWidth, thickness, height], center=true);
+      translate([-6,-5.75,-height/2]) tube(6,8,8,1.5);
+      mirror([1,0,0]) translate([-6,-5.75,-height/2]) tube(6,8,8,1.5);
     }
-    translate([0, 0, 3]) rotate([90, 0, 0]) {
+    translate([0, 0, 3.5]) rotate([90, 0, 0]) {
       cylinder(r=m3_wide_radius, h=20, center=true, $fn=12);
       translate([0, 0, -3.0+thickness/2]) {
         cylinder(r=3, h=10, $fn=24);
         translate([0, 5, 5])
           cube([6, 10, 10], center=true);
-      }
-//      translate([0, 0, -thickness/2]) scale([1, 1, -1])
-//        cylinder(r1=m3_wide_radius, r2=7, h=4, $fn=24);
-    }
-    translate([0, -3-thickness/2, -2]) rotate([0, 180, 0]) {
-      % microswitch();
-      for (x = [-9.5/2, 9.5/2]) {
-        translate([x, 0, 0]) rotate([90, 0, 0])
-          cylinder(r=2.5/2, h=40, center=true, $fn=12);
       }
     }
   }
