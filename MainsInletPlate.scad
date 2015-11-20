@@ -1,7 +1,8 @@
-length=130;
+length=220;
 height=60;
 thickness=2.5;
 round=5;
+m4ClearRad=2.1;
 overlap=0.1;
 
 module fuseCutout() {
@@ -33,13 +34,19 @@ module roundCorner(radius, height) {
 
 difference() {
 	translate([-height/2,0,0]) cube([height,length,2.5]);
-	translate([0,30,0]) fuseCutout();
-	translate([0,55,0]) switchCutout();
-	translate([0,90,0]) inletCutout();
-	translate([20,10,-overlap]) cylinder(r=1.6,h=thickness+2*overlap, $fn=16);
-	translate([20,length-10,-overlap]) cylinder(r=1.6,h=thickness+2*overlap, $fn=16);
-	translate([-20,10,-overlap]) cylinder(r=1.6,h=thickness+2*overlap, $fn=16);
-	translate([-20,length-10,-overlap]) cylinder(r=1.6,h=thickness+2*overlap, $fn=16);
+	translate([0,115,0]) fuseCutout();
+	translate([0,140,0]) switchCutout();
+	translate([0,85,0]) inletCutout();
+
+	// Screw holes
+	translate([20,10,-overlap]) cylinder(r=m4ClearRad,h=thickness+2*overlap, $fn=16);
+	translate([-20,10,-overlap]) cylinder(r=m4ClearRad,h=thickness+2*overlap, $fn=16);
+	translate([20,length/2,-overlap]) cylinder(r=m4ClearRad,h=thickness+2*overlap, $fn=16);
+	translate([-20,length/2,-overlap]) cylinder(r=m4ClearRad,h=thickness+2*overlap, $fn=16);
+	translate([20,length-10,-overlap]) cylinder(r=m4ClearRad,h=thickness+2*overlap, $fn=16);
+	translate([-20,length-10,-overlap]) cylinder(r=m4ClearRad,h=thickness+2*overlap, $fn=16);
+
+	// Corners
 	translate([-height/2+round,round,-overlap])
 		rotate([0,0,180]) roundCorner(round,thickness+2*overlap);
 	translate([height/2-round,round,-overlap])
