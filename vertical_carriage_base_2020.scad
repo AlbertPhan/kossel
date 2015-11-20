@@ -118,6 +118,10 @@ module main_carriage()
     difference() {
       main_part();
 
+		// Chamfer the top edges to make room for Igus joints
+		translate([main_cube_width/2,0,main_height/2+5.7]) rotate([0,45,0]) cube([10,200,10],center=true);
+		translate([-main_cube_width/2,0,main_height/2+5.7//]) rotate([0,45,0]) cube([10,200,10],center=true);
+
       // Square + oval cutout in center, minus section to give 3rd screw hole some beef.
       difference() {
         union() {
