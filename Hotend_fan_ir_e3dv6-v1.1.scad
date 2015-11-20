@@ -1,6 +1,7 @@
 //Adaptation of the orginal hotend fan mount for the mini Kossel
 //Tony@think3dprint3d.com
 //Gpl v3
+//modified by dc42
 
 include <configuration.scad>;
 
@@ -9,12 +10,15 @@ barrel_height = 26.2;
 main_height = 39.0;
 
 groove_radius = 6.0 + 0.1;
-groove_height = 6.0 - 0.1;
+groove_height = 6.0 - 0.2;
 ring_radius = 8;
 
 fanVoffset=0;
 fan_offset = 18;
-nozzleHeight=58.6;
+nozzleHeight=58.1;
+
+mountingCircleRadius=12.2;			// use this for T3P3 printed effector
+//mountingCircleRadius=29/2;		// use this one for Robotdigg aluminium effector
 
 IRflangeThickness=6;
 IRboardFixingCentres=21.11-2.70;
@@ -75,15 +79,10 @@ module hotend_fan() {
     }
     // Main mounting holes
     for (a = [60:60:359]) {
-      rotate([0, 0, a]) translate([0, 12.2, 0]) 
-        cylinder(r=m3_radius+m3VertExtraRadius, h=12.2, center=true, $fn=12);
+      rotate([0, 0, a]) translate([0, mountingCircleRadius, 0]) 
+        cylinder(r=m3_radius+m3VertExtraRadius, h=(a==180) ? 10 : 12.5, center=true, $fn=12);
     }
     // IR board mount
-//	translate([-IRboardWidth/2,-IRboardFixingOffset-10,IRboardFixingHeight-3.0])
-//		cube([IRboardWidth,10,30]);
-//	translate([-12/2,-IRboardFixingOffset+1.5-10,IRboardFixingHeight-1]) cube([12,10,50]);
-//	translate([-12/2,-IRboardFixingOffset+1.5-10/2,IRboardFixingHeight+4])
-//		rotate([0,45,0]) cube([4,10,4],center=true);
 	// fixing holes
    translate([-IRboardFixingCentres/2,-IRboardFixingOffset-overlap-IRflangeThickness,IRboardFixingHeight])
 		rotate([-90,0,0]) cylinder(r=1.2, h=6+2*overlap, $fn=12);
@@ -124,14 +123,6 @@ module hotend_fan() {
 }
 
 hotend_fan();
-// IR board mounting tab
-//difference() {
-//	translate([4+7.5+4,-25/2,35]) cube([5,25,8]);
-//  translate([0.01,-IRboardFixingCentres/2,IRboardFixingHeight])
-//		rotate([0,-90,0]) cylinder(r=1.2, h=7, $fn=12);
-//   translate([0.01,IRboardFixingCentres/2,IRboardFixingHeight])
-//		rotate([0,-90,0]) cylinder(r=1.2, h=7, $fn=12);
-//}
 
 
 /*
